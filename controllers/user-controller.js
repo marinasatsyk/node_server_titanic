@@ -36,3 +36,13 @@ export const login =  async(req, res, next) =>  {
         next(err) //we use error middleware 
     }
 }
+
+export const logout =  async(req, res, next) =>  {
+    try{
+        const token = await userService.logout(refreshToken)
+        return res.json(token);
+    }catch(err){
+        next(err)
+    }
+}
+
