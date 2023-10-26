@@ -39,12 +39,13 @@ export const passengers = async(req, res, next) => {
                     } }
                 }else{
                     options = {
-                        Age:  { $type : 2 } 
+                        Age:  -1 
                     }
                 }
 
                 const pData =   await PassengerService.getPassengersByCriteria(options);
                 const data = Object.keys(range).length ?   {...range, pData} : {pData}
+                
                 passengersByRanges.push(data)
              }
         }
