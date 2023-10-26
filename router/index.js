@@ -22,8 +22,8 @@ router.post('/login', userController.login);
 //#protected routes
 router.post('/passengers', authMiddleware,  passengerController.passengers);
 
+router.get('/user/:id', authMiddleware,  userController.userDetails); 
+router.post('/user/:id', authMiddleware,  userController.userUpdate); 
 
-
-// router.post('/login', userController.login);
 
 export default router;
