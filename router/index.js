@@ -20,7 +20,7 @@ router.post('/login', userController.login);
 
 
 //#protected routes
-router.get('/passengers', authMiddleware,  passengerController.passengers);
+router.post('/passengers', authMiddleware,  passengerController.passengers);
 
 
 
