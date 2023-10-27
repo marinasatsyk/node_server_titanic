@@ -6,8 +6,6 @@ export const passengers = async(req, res, next) => {
     try{
         const ranges = req.body?.ageRanges;
         const passengersByRanges = [];
-        const passengersNoAges = [];
-        console.log("*************************************", req.body)
         if(ranges){
             
             for await(const range of ranges){

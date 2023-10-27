@@ -11,6 +11,7 @@ router.post('/registration',
     body('email').isEmail(),
     body('password').isLength({min:3, max: 32}),
     userController.registration);
+
 router.post('/login', userController.login);
 
 
@@ -22,8 +23,10 @@ router.post('/login', userController.login);
 //#protected routes
 router.post('/passengers', authMiddleware,  passengerController.passengers);
 
-router.get('/user/:id', authMiddleware,  userController.userDetails); 
+router.get('/user/:id', authMiddleware,  userController.userDetails);
+
 router.post('/user/:id', authMiddleware,  userController.userUpdate); 
+
 router.delete('/user/:id', authMiddleware,  userController.userDelete); 
 
 

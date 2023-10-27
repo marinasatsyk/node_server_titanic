@@ -19,13 +19,10 @@ export const authMiddleware = async(req, res, next) => {
             return next(ApiError.UnauthorizedError())
         }
         
-        console.log('accessToken', accessToken)
         const userData = await tokenService.validateToken(accessToken);
-        console.log("userData", userData)
         
 
         if(!userData){
-            console.log("!user data")
             return next(ApiError.UnauthorizedError())
         }
 

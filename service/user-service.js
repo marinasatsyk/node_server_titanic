@@ -5,16 +5,15 @@ import jwt from "jsonwebtoken";
 import UserDto from '../dtos/user-dto.js';
 import { ApiError } from "../exceptions/api-error.js";
 import mongoose from "mongoose";
+import { isEmail } from "../helpers/helpers.js";
 
 const SALTROUNDS = 10;
 
 
 export const registration = async (email, password, firstName, lastName, role = 'user') => {
-    console.log(email, password, firstName, lastName, role);
    //verify user exists
     const candidate = await UserModel.findOne({email})
     if(candidate){
-        console.log("candidate", candidate)
         throw ApiError.BadRequest('email exists');  
     }
     //crypt password 
@@ -76,9 +75,21 @@ export const userDetails = async (userId) => {
 
 export const findOneAndUpdate = async (userId, dataForUpdate) => {
      const id = new mongoose.Types.ObjectId(userId);
-    
-     console.log(dataForUpdate)
-      
+
+    if(dataForUpdate.email){
+    const checkEmail = dataForUpdate.email.trim().toLowerCase();
+    if(!isEmail(checkEmail)){
+        throw ApiError.BadRequest('Email format incorrect')
+    }
+
+    const userDocVeirify = await UserModel.findOne({email: checkEmail});
+
+    console.log(userDocVeirify)
+        if(userDocVeirify){
+            throw ApiError.BadRequest('User with email exists')
+        }  
+    }
+
     const userDoc = await UserModel.findByIdAndUpdate({_id: id}, {$set: dataForUpdate})
     
     if(!userDoc){
@@ -92,7 +103,13 @@ export const findOneAndUpdate = async (userId, dataForUpdate) => {
 }
 
 export const findOneAndDelete = async (userId) => {
-     const id = new mongoose.Types.ObjectId(userId);
+    const id = new mongoose.Types.ObjectId(userId);
+
+    const updatedUserDoc = await UserModel.findById(id);
+    if(!updatedUserDoc){
+        throw ApiError.BadRequest('User doesn\'t found')
+    }
     const userDoc = await UserModel.findByIdAndDelete(id);
+   
     return{ userDoc }
 }

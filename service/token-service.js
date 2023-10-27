@@ -13,9 +13,7 @@ export const generateToken = async(payload) => {
 
 export const validateToken = async(token) => {
     try{
-        console.log('from validate access token', token)
         const userData = jwt.verify(token, JWT_ACCESS_SECRET)
-        console.log('🎲🎲🎲validate Access Token', userData)
         return userData;
     }catch(err){
         return null

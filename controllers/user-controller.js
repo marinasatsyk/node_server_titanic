@@ -36,19 +36,10 @@ export const login =  async(req, res, next) =>  {
     }
 }
 
-// export const logout =  async(req, res, next) =>  {
-//     try{
-//         const token = await userService.logout(refreshToken)
-//         return res.json(token);
-//     }catch(err){
-//         next(err)
-//     }
-// }
 
 export const userDetails = async(req, res, next) =>  {
     try{
         const {id} = req.params;
-        console.log(id)
         const userData = await userService.userDetails(id);
         
         return res.json(userData); //sent in client side json object
@@ -57,22 +48,23 @@ export const userDetails = async(req, res, next) =>  {
         next(err) //we use error middleware 
     }
 }
+
 export const userUpdate = async(req, res, next) =>  {
     try{
         const {id} = req.params;
-        console.log(id)
         const {email, firstName, lastName, createdDateTime, role, preferences} =  req.body;
         const dataForUpdate = {email, firstName, lastName, createdDateTime, role, preferences}
         const userData = await userService.findOneAndUpdate(id, dataForUpdate);
+
         return res.json(userData); //sent in client side json object
     }catch(err){
         next(err) //we use error middleware 
     }
 }
+
 export const userDelete = async(req, res, next) =>  {
     try{
         const {id} = req.params;
-        console.log(id)
         const userData = await userService.findOneAndDelete(id);
         return res.json(userData); //sent in client side json object
     }catch(err){
