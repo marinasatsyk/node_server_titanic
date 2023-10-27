@@ -73,6 +73,7 @@ export const userDetails = async (userId) => {
     const userData = {email, firstName, lastName, createdDateTime, role, preferences};
     return{ userData }
 }
+
 export const findOneAndUpdate = async (userId, dataForUpdate) => {
      const id = new mongoose.Types.ObjectId(userId);
     
@@ -90,3 +91,8 @@ export const findOneAndUpdate = async (userId, dataForUpdate) => {
     return{ userData }
 }
 
+export const findOneAndDelete = async (userId) => {
+     const id = new mongoose.Types.ObjectId(userId);
+    const userDoc = await UserModel.findByIdAndDelete(id);
+    return{ userDoc }
+}

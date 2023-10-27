@@ -24,6 +24,7 @@ router.post('/passengers', authMiddleware,  passengerController.passengers);
 
 router.get('/user/:id', authMiddleware,  userController.userDetails); 
 router.post('/user/:id', authMiddleware,  userController.userUpdate); 
+router.delete('/user/:id', authMiddleware,  userController.userDelete); 
 
 
 export default router;

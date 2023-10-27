@@ -69,4 +69,14 @@ export const userUpdate = async(req, res, next) =>  {
         next(err) //we use error middleware 
     }
 }
+export const userDelete = async(req, res, next) =>  {
+    try{
+        const {id} = req.params;
+        console.log(id)
+        const userData = await userService.findOneAndDelete(id);
+        return res.json(userData); //sent in client side json object
+    }catch(err){
+        next(err) //we use error middleware 
+    }
+}
 
